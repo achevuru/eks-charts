@@ -76,6 +76,9 @@ eksctl create iamserviceaccount --cluster $CLUSTER_NAME \
 ```
 
 Deploy appmesh-controller
+
+**Note:** To enable mTLS via SDS(SPIRE), please set "sds.enabled=true".
+
 ```sh
 helm upgrade -i appmesh-controller ./stable/appmesh-controller \
     --namespace appmesh-system \
@@ -154,6 +157,9 @@ eksctl create iamserviceaccount --cluster $CLUSTER_NAME \
 ```
 
 Deploy appmesh-controller
+
+**Note:** mTLS via SDS(SPIRE) is not supported on Fargate.
+
 ```sh
 helm upgrade -i appmesh-controller ./stable/appmesh-controller \
     --namespace appmesh-system \
@@ -161,6 +167,8 @@ helm upgrade -i appmesh-controller ./stable/appmesh-controller \
     --set serviceAccount.create=false \
     --set serviceAccount.name=appmesh-controller
 ```
+
+
 
 ## Upgrade
 
@@ -307,7 +315,7 @@ Parameter | Description | Default
 `image.tag` | image tag | `<VERSION>`
 `image.pullPolicy` | image pull policy | `IfNotPresent`
 `log.level` | controller log level, possible values are `info` and `debug`  | `info`
-`sds.enabled` | If `true`, SDS will be enabled in Envoy | `true`
+`sds.enabled` | If `true`, SDS will be enabled in Envoy | `false`
 `sds.udsPath` | Unix Domain Socket Path of the SDS Provider(SPIRE for preview release) | `/run/spire/sockets/agent.sock`
 `resources.requests/cpu` | pod CPU request | `100m`
 `resources.requests/memory` | pod memory request | `64Mi`
